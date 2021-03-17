@@ -1,42 +1,45 @@
 import {FieldValue, IField, IGame} from './Assets.interface';
 import {Logic} from './Logic';
 import {Game} from './Game';
-/* tslint:disable */
+/*tslint:disable*/
 export class Grid implements IField{
   readonly actualValue: FieldValue;
   readonly value: FieldValue;
-  currentGame: IGame | undefined;
+  currentGame!: IGame | undefined;
 
   shoot(): IGame {
 
-    let newGrid: Grid[][] = [];
-    let xSize = this.currentGame!.field   .length;
-    let ySize = this.currentGame!.field[0].length;
+    const newGrid: Grid[][] = [];
+
+    // @ts-ignore
+    const xSize = this.currentGame.field   .length;
+    // @ts-ignore
+    const ySize = this.currentGame.field[0].length;
 
     for (let y = 0; y < xSize; y++) {
       for (let x = 0; x < ySize; x++) {
 
-        const element: Grid = this.currentGame!.field[x][y];
+        // @ts-ignore
+        const element: Grid = this.currentGame.field[x][y];
 
 
         let value: FieldValue = element.value;
         let actualValue: FieldValue = element.actualValue;
-        let currGame = element.currentGame;
 
-        if(element === this) {
+        if (element === this) {
 
-          if(actualValue == FieldValue.SHIP_PART) {
-            console.log("hit");
+          if (actualValue === FieldValue.SHIP_PART) {
+            console.log('hit');
             value = actualValue = FieldValue.PART_OF_DESTROYED_SHIP;
           } else {
-            console.log("miss");
+            console.log('miss');
             value = actualValue;
           }
 
         }
 
 
-        let newField = new Grid(actualValue, value);
+        const newField = new Grid(actualValue, value);
 
 
         const column = newGrid[x] = newGrid[x] || [];
@@ -44,9 +47,10 @@ export class Grid implements IField{
 
       }
     }
-    let newGame: IGame = new Game(newGrid, Logic.checkWin(newGrid, true));
+    let newGame: IGame;
+    newGame = new Game(newGrid, Logic.checkWin(newGrid, true));
     Logic.assignGame(newGame, newGrid);
-    return newGame!;
+    return newGame;
   }
 
   constructor(actualValue: FieldValue, value: FieldValue) {
