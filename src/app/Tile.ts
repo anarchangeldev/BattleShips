@@ -2,14 +2,14 @@ import {FieldValue, IField, IGame} from './Assets.interface';
 import {Logic} from './Logic';
 import {Game} from './Game';
 /*tslint:disable*/
-export class Grid implements IField{
+export class Tile implements IField{
   readonly actualValue: FieldValue;
   readonly value: FieldValue;
   currentGame!: IGame | undefined;
 
   shoot(): IGame {
 
-    const newGrid: Grid[][] = [];
+    const newBattleField: Tile[][] = [];
 
     // @ts-ignore
     const xSize = this.currentGame.field   .length;
@@ -20,7 +20,7 @@ export class Grid implements IField{
       for (let x = 0; x < ySize; x++) {
 
         // @ts-ignore
-        const element: Grid = this.currentGame.field[x][y];
+        const element: Tile = this.currentGame.field[x][y];
 
 
         let value: FieldValue = element.value;
@@ -29,27 +29,27 @@ export class Grid implements IField{
         if (element === this) {
 
           if (actualValue === FieldValue.SHIP_PART) {
-            console.log('hit');
+
             value = actualValue = FieldValue.PART_OF_DESTROYED_SHIP;
           } else {
-            console.log('miss');
+
             value = actualValue;
           }
 
         }
 
 
-        const newField = new Grid(actualValue, value);
+        const newField = new Tile(actualValue, value);
 
 
-        const column = newGrid[x] = newGrid[x] || [];
+        const column = newBattleField[x] = newBattleField[x] || [];
         column[y] = newField;
 
       }
     }
     let newGame: IGame;
-    newGame = new Game(newGrid, Logic.checkWin(newGrid, true));
-    Logic.assignGame(newGame, newGrid);
+    newGame = new Game(newBattleField, Logic.checkWin(newBattleField, true));
+    Logic.assignGame(newGame, newBattleField);
     return newGame;
   }
 

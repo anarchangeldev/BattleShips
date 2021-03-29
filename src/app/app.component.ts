@@ -20,8 +20,8 @@ export class AppComponent {
     this.game = Logic.generate();
   }
 
-  shoot(grid: IField): void {
-    this.game = grid.shoot();
+  shoot(field: IField): void {
+    this.game = field.shoot();
   }
 
   restart(): void {
