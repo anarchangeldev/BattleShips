@@ -6,21 +6,16 @@ import {Game} from './Game';
 export class Tile implements IField{
   readonly actualValue: ActualFieldValue;
   readonly value: FieldValue;
-  currentGame!: IGame | undefined;
+  currentGame!: Game;
 
   shoot(): IGame {
 
     const newBattleField: Tile[][] = [];
+    const field = this.currentGame.field;
 
-    // @ts-ignore
-    const xSize = this.currentGame.field   .length;
-    // @ts-ignore
-    const ySize = this.currentGame.field[0].length;
+    for (let y = 0; y < field.length; y++) {
+      for (let x = 0; x < field[y].length; x++) {
 
-    for (let y = 0; y < xSize; y++) {
-      for (let x = 0; x < ySize; x++) {
-
-        // @ts-ignore
         const element: Tile = this.currentGame.field[x][y];
 
 
