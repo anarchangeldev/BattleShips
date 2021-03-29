@@ -1,6 +1,6 @@
-import { Game } from './Game';
-import { Tile } from './Tile';
-import {FieldValue, IGame} from './Assets.interface';
+import {Game} from './Game';
+import {Tile} from './Tile';
+import {ActualFieldValue, FieldValue, IGame} from './Assets.interface';
 // tslint:disable:typedef
 // tslint:disable:prefer-for-of
 export class Logic {
@@ -19,7 +19,7 @@ export class Logic {
       for (let x = 0; x < this.fieldSize; x++) {
 
         let value;
-        if (Math.round(Math.random()) !== 0) { value = FieldValue.WATER; } else { value = FieldValue.SHIP_PART; }
+        if (Math.round(Math.random()) !== 0) { value = ActualFieldValue.WATER; } else { value = ActualFieldValue.SHIP_PART; }
         const element: Tile = new Tile(value, FieldValue.UNKNOWN);
         const column = field[x] = field[x] || [];
         column[y] = element;
@@ -49,7 +49,7 @@ export class Logic {
     for (let y = 0; y < field.length; y++) {
       for (let x = 0; x < field[0].length; x++) {
 
-        if (field[y][x].actualValue === FieldValue.SHIP_PART) {
+        if (field[y][x].actualValue === ActualFieldValue.SHIP_PART) {
           returnCond = false;
         }
       }

@@ -1,9 +1,10 @@
-import {FieldValue, IField, IGame} from './Assets.interface';
+import {ActualFieldValue, FieldValue, IField, IGame} from './Assets.interface';
 import {Logic} from './Logic';
 import {Game} from './Game';
+
 /*tslint:disable*/
 export class Tile implements IField{
-  readonly actualValue: FieldValue;
+  readonly actualValue: ActualFieldValue;
   readonly value: FieldValue;
   currentGame!: IGame | undefined;
 
@@ -24,16 +25,25 @@ export class Tile implements IField{
 
 
         let value: FieldValue = element.value;
-        let actualValue: FieldValue = element.actualValue;
+        let actualValue: ActualFieldValue = element.actualValue;
 
         if (element === this) {
 
-          if (actualValue === FieldValue.SHIP_PART) {
+          if (actualValue === ActualFieldValue.SHIP_PART) {
 
-            value = actualValue = FieldValue.PART_OF_DESTROYED_SHIP;
+            actualValue = ActualFieldValue.PART_OF_DESTROYED_SHIP;
+            value = FieldValue.PART_OF_DESTROYED_SHIP;
+
           } else {
+            switch (actualValue) {
+              case ActualFieldValue.PART_OF_DESTROYED_SHIP:
+                value = FieldValue.PART_OF_DESTROYED_SHIP;
+                break;
+              case ActualFieldValue.WATER:
+                value = FieldValue.WATER;
+                break;
+            }
 
-            value = actualValue;
           }
 
         }
@@ -53,7 +63,7 @@ export class Tile implements IField{
     return newGame;
   }
 
-  constructor(actualValue: FieldValue, value: FieldValue) {
+  constructor(actualValue: ActualFieldValue, value: FieldValue) {
     this.actualValue = actualValue;
     this.value = value;
   }
