@@ -1,4 +1,4 @@
-import {IField, IGame} from './Assets.interface';
+import {IGame} from './Assets.interface';
 import {Tile} from './Tile';
 
 export class Game implements IGame{

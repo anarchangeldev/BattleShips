@@ -6,7 +6,7 @@ import {Game} from './Game';
 export class Tile implements IField{
   readonly actualValue: ActualFieldValue;
   readonly value: FieldValue;
-  currentGame!: Game;
+  currentGame!: IGame;
 
   shoot(): IGame {
 
@@ -16,7 +16,7 @@ export class Tile implements IField{
     for (let y = 0; y < field.length; y++) {
       for (let x = 0; x < field[y].length; x++) {
 
-        const element: Tile = this.currentGame.field[x][y];
+        const element: IField = this.currentGame.field[x][y];
 
 
         let value: FieldValue = element.value;

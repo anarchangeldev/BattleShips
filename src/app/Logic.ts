@@ -4,7 +4,7 @@ import {ActualFieldValue, FieldValue, IGame} from './Assets.interface';
 // tslint:disable:typedef
 // tslint:disable:prefer-for-of
 export class Logic {
-  static readonly fieldSize = 6;
+  private static readonly fieldSize = 6;
 
 
 

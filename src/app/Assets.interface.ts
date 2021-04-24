@@ -9,6 +9,7 @@ export interface IField {
 
   currentGame: IGame | undefined;
   readonly value: FieldValue;
+  readonly actualValue: ActualFieldValue;
 
   /**
    * @return changed instance of game with new state
